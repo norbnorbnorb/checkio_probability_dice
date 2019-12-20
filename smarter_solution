@@ -17,7 +17,7 @@ def throw_dice(current_val, dice_left, sides, target, possibility_count):
 
     for s in range(1, sides+1):  # do this for every side
         current_new_val = current_val + s
-        if can_reach_target(current_new_val, dice_left, sides, target):
+        if can_reach_target(current_new_val, dice_left-1, sides, target):
             possibility_count += throw_dice(current_new_val, dice_left - 1, sides, target, possibility_count)
         else:
             possibility_count += + 0
