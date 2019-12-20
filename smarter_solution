@@ -1,0 +1,47 @@
+def cannot_reach_target(current_val, dice_left, sides, target):
+    max_reachable = dice_left*sides
+    min_reachable = dice_left
+    val_too_high = (current_val + min_reachable) > target
+    val_too_low = (current_val + max_reachable) < target
+    return any((val_too_high, val_too_low))
+
+
+def throw_dice(current_val, dice_left, sides, target, possibility_count):
+    pass
+    # base case
+    if dice_left == 0:
+        if current_val == target:
+            return 1
+        else:
+            return 0
+
+    for s in range(1, sides+1):
+        current_val = current_val + s
+        if cannot_reach_target(current_val, dice_left, sides, target):
+            return 0
+        else:
+            return possibility_count + throw_dice(current_val, dice_left-1, sides, target, possibility_count)
+
+
+def probability(dice_number, sides, target):
+    possibilities_total = dice_number**sides
+    valid_target_possibilities = 0
+    known_outcomes = {'die1': {}}  # here we store already calculated outcomes
+
+    return 0.0
+
+
+if __name__ == '__main__':
+    # These are only used for self-checking and are not necessary for auto-testing
+    def almost_equal(checked, correct, significant_digits=4):
+        precision = 0.1 ** significant_digits
+        return correct - precision < checked < correct + precision
+
+
+    assert (almost_equal(probability(2, 6, 3), 0.0556)), "Basic example"
+    assert (almost_equal(probability(2, 6, 4), 0.0833)), "More points"
+    assert (almost_equal(probability(2, 6, 7), 0.1667)), "Maximum for two 6-sided dice"
+    assert (almost_equal(probability(2, 3, 5), 0.2222)), "Small dice"
+    assert (almost_equal(probability(2, 3, 7), 0.0000)), "Never!"
+    assert (almost_equal(probability(3, 6, 7), 0.0694)), "Three dice"
+    assert (almost_equal(probability(10, 10, 50), 0.0375)), "Many dice, many sides"
