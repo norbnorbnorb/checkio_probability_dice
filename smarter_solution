@@ -25,7 +25,7 @@ def throw_dice(current_val, dice_left, sides, target, possibility_count):
 
 
 def probability(dice_number, sides, target):
-    possibilities_total = dice_number**sides
+    possibilities_total = sides**dice_number
     possibility_count = 0
     known_outcomes = {'die1': {}}  # here we store already calculated outcomes
     current_val = 0
