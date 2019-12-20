@@ -1,13 +1,12 @@
-def cannot_reach_target(current_val, dice_left, sides, target):
+def can_reach_target(current_val, dice_left, sides, target):
     max_reachable = dice_left*sides
     min_reachable = dice_left
     val_too_high = (current_val + min_reachable) > target
     val_too_low = (current_val + max_reachable) < target
-    return any((val_too_high, val_too_low))
+    return not any((val_too_high, val_too_low))
 
 
 def throw_dice(current_val, dice_left, sides, target, possibility_count):
-    pass
     # base case
     if dice_left == 0:
         if current_val == target:
@@ -15,20 +14,25 @@ def throw_dice(current_val, dice_left, sides, target, possibility_count):
         else:
             return 0
 
-    for s in range(1, sides+1):
-        current_val = current_val + s
-        if cannot_reach_target(current_val, dice_left, sides, target):
-            return 0
+    for s in range(1, sides+1):  # do this for every side
+        current_new_val = current_val + s
+        if can_reach_target(current_new_val, dice_left, sides, target):
+            possibility_count += possibility_count + throw_dice(current_new_val, dice_left - 1, sides, target, possibility_count)
         else:
-            return possibility_count + throw_dice(current_val, dice_left-1, sides, target, possibility_count)
+            possibility_count += possibility_count + 0
+        return possibility_count
 
 
 def probability(dice_number, sides, target):
     possibilities_total = dice_number**sides
-    valid_target_possibilities = 0
+    possibility_count = 0
     known_outcomes = {'die1': {}}  # here we store already calculated outcomes
-
-    return 0.0
+    current_val = 0
+    valid_possibilities = throw_dice(current_val, dice_number, sides, target, possibility_count)
+    print(f'v: {valid_possibilities}')
+    probability = round(valid_possibilities / possibilities_total, 4)
+    print(f'p= {probability}')
+    return probability
 
 
 if __name__ == '__main__':
