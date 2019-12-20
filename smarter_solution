@@ -1,8 +1,8 @@
 def can_reach_target(current_val, dice_left, sides, target):
-    max_reachable = dice_left*sides
-    min_reachable = dice_left
-    val_too_high = (current_val + min_reachable) > target
-    val_too_low = (current_val + max_reachable) < target
+    max_reachable = current_val + (dice_left*sides)
+    min_reachable = current_val + dice_left
+    val_too_high = min_reachable > target
+    val_too_low = max_reachable < target
     return not any((val_too_high, val_too_low))
 
 
