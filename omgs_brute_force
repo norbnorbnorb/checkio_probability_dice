@@ -1,9 +1,0 @@
-import itertools
-def probability(dice_number, sides, target):
-    num_sides = map(sum,itertools.product([x for x in range(1,sides+1)], repeat= dice_number))
-    count = filter(lambda x : x == target , num_sides)
-    
-        
-    denom = sides ** dice_number
-
-    return float(f"{len(list(count))/denom:.4f}")
